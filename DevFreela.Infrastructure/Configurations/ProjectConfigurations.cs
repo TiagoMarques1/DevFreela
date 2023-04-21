@@ -10,7 +10,7 @@ namespace DevFreela.Infrastructure.Configurations
         {
             builder
                 .ToTable("tb_Project")
-            .HasKey(x => x.Id);
+                .HasKey(x => x.Id);
 
             builder
                 .HasOne(x => x.Freelancer)
