@@ -16,40 +16,6 @@ namespace DevFreela.Application.Services.Implementations
             _DevFreelaDbContext = devFreelaDbContext;
         }
 
-        public int Create(NewProjectInputModel inputModel)
-        {
-            var project = new Project(inputModel.Title, inputModel.Description, inputModel.IdClient, inputModel.IdFreelancer, inputModel.TotalCost);
-
-            _DevFreelaDbContext.Projects.Add(project);
-            _DevFreelaDbContext.SaveChanges();
-
-            return project.Id;
-        }
-
-        public void CreateComment(CreateCommentInputModel inputModel)
-        {
-            var comment = new ProjectComment(inputModel.Content, inputModel.IdProject, inputModel.IdUser);
-
-            _DevFreelaDbContext.ProjectComments.Add(comment);
-            _DevFreelaDbContext.SaveChanges();
-
-        }
-
-        public void Delete(int id)
-        {
-            var project = _DevFreelaDbContext.Projects.SingleOrDefault(p => p.Id == id);
-
-            project.CancelProject();
-            _DevFreelaDbContext.SaveChanges();
-        }
-
-        public void Finish(int id)
-        {
-            var project = _DevFreelaDbContext.Projects.SingleOrDefault(p => p.Id == id);
-
-            project.FinishProject();
-            _DevFreelaDbContext.SaveChanges();
-        }
 
         public List<ProjectViewModel> GetAll(string query)
         {
@@ -86,20 +52,5 @@ namespace DevFreela.Application.Services.Implementations
             return projectDetailsViewModel;
         }
 
-        public void Start(int id)
-        {
-            var project = _DevFreelaDbContext.Projects.SingleOrDefault(p => p.Id == id);
-
-            project.StartProject();
-            _DevFreelaDbContext.SaveChanges();
-        }
-
-        public void Update(UpdateProjectInputModel inputModel)
-        {
-            var project = _DevFreelaDbContext.Projects.SingleOrDefault(p => p.Id == inputModel.Id);
-
-            project.UpdateProject(inputModel.Title, inputModel.Description, inputModel.TotalCost);
-            _DevFreelaDbContext.SaveChanges();
-        }
     }
 }

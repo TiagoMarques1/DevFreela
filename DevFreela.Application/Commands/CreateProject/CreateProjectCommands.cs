@@ -1,6 +1,8 @@
-﻿namespace DevFreela.Application.InputModels
+﻿using MediatR;
+
+namespace DevFreela.Application.Commands.CreateProject
 {
-    public class NewProjectInputModel
+    public class CreateProjectCommands : IRequest<int>
     {
         public int Id { get; set; }
         public string Title { get; set; }
