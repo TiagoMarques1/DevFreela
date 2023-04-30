@@ -4,7 +4,8 @@ using DevFreela.Application.Commands.DeleteProject;
 using DevFreela.Application.Commands.FinishProject;
 using DevFreela.Application.Commands.StartProject;
 using DevFreela.Application.Commands.UpdateProject;
-using DevFreela.Application.Services.Interfaces;
+using DevFreela.Application.Queries.GetAllProject;
+using DevFreela.Application.Queries.GetByIdProject;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,11 +14,9 @@ namespace DevFreela.API.Controllers
     [Route("api/projects")]
     public class ProjectsController : ControllerBase
     {
-        private readonly IProjectService _projectService;
         private readonly IMediator _mediatR;
-        public ProjectsController(IProjectService projectService, IMediator mediator)
+        public ProjectsController(IMediator mediator)
         {
-            _projectService = projectService;
             _mediatR = mediator;
         }
 
@@ -59,10 +58,10 @@ namespace DevFreela.API.Controllers
 
         // api/projects/1/start
         [HttpPut("{id}/start")]
-        public IActionResult Start(int id)
+        public async Task<IActionResult> Start(int id)
         {
             var command = new StartProjecCommand(id);
-            _mediatR.Send(command);
+            await _mediatR.Send(command);
 
             return NoContent();
         }
@@ -79,18 +78,20 @@ namespace DevFreela.API.Controllers
 
         // api/projects?query=net core
         [HttpGet]
-        public IActionResult Get(string query)
+        public async Task<IActionResult> GetAll(string query)
         {
-            var projects = _projectService.GetAll(query);
+            var getAllProjectsQuery = new GetAllProjectQuery(query);
+            var projects = await _mediatR.Send(getAllProjectsQuery);
 
             return Ok(projects);
         }
 
         // api/projects/2
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            var project = _projectService.GetById(id);
+            var query = new GetByIdProjectQuery(id);
+            var project = await _mediatR.Send(query);
 
             if (project == null)
             {

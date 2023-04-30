@@ -3,7 +3,7 @@ using MediatR;
 
 namespace DevFreela.Application.Queries.GetAllProject
 {
-    internal class GetAllProjectQuery : IRequest<List<ProjectViewModel>>
+    public class GetAllProjectQuery : IRequest<List<ProjectViewModel>>
     {
         public GetAllProjectQuery(string query)
         {
