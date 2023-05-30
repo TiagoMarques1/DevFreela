@@ -1,10 +1,11 @@
 ﻿using DevFreela.Core.Entities;
+using DevFreela.Core.Repositories;
 using DevFreela.Infrastructure.Persisntece;
 using Microsoft.EntityFrameworkCore;
 
 namespace DevFreela.Infrastructure.Persistence.Repository
 {
-    public class SkillRepository
+    public class SkillRepository : ISkillRepository
     {
         private readonly DevFreelaDbContext _dbContext;
 

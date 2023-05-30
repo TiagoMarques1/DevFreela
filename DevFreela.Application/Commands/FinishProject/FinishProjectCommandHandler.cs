@@ -1,5 +1,4 @@
 ﻿using DevFreela.Core.Repositories;
-using DevFreela.Infrastructure.Persisntece;
 using MediatR;
 
 namespace DevFreela.Application.Commands.FinishProject

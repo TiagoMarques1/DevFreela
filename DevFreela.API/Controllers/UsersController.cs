@@ -35,6 +35,16 @@ namespace DevFreela.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateUserCommand query)
         {
+            if (!ModelState.IsValid)
+            {
+                var massages = ModelState
+                    .SelectMany(ms => ms.Value.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
+
+                return BadRequest(massages);
+            }
+
             var id = await _mediator.Send(query);
 
             return CreatedAtAction(nameof(GetById), new { id = id }, query);
